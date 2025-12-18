@@ -7,20 +7,21 @@ on:
 jobs:
   display_issue: 
     runs-on: ubuntu-latest
-
-    env:
-      ISSUE_NUMBER: ${{ github.event.issue.number }}
-      ISSUE_TITLE: ${{ github.event.issue.title }}
-      ISSUE_BODY: ${{ github.event.issue.body }}
-      ISSUE_ASSIGNEES: ${{ join(github.event.issue.assignees.*.login, ', ') }}
-      ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ', ') }}
       
     steps:
       # actions/checkout
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Echo issue details
+      - name: Print issue details
+        
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_ASSIGNEES: ${{ join(github.event.issue.assignees.*.login, ', ') }}
+          ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ', ') }}
+        
         # Say Hello, world" in bash 
         run: |
           echo "Issue Number: $ISSUE_NUMBER"
