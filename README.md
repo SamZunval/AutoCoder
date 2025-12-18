@@ -1,3 +1,2 @@
 # AutoCoder
-Repository for the AutoCoder project in HyperSkill. 
-A public directory that will contain the configuration files for Github Actions (workflow directory ) and the scripts (scripts directory) to interact with ChatGpt
+This repository contains the AutoCoder project developed as part of the HyperSkill platform. It includes a public directory with GitHub Actions configuration files for automated workflows, as well as dedicated scripts used to interact with ChatGPT. The project is structured to support maintainability, automation, and seamless integration with continuous development pipelines.
