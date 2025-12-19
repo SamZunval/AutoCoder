@@ -30,13 +30,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: autocoder-artifact
-        path: autocoder-bot
-
-    - name: Download AutoCoder artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: autocoder-artifact
-        path: autocoder-artifact
+        path: autocoder/autocoder-artifact
 
     - name: List generated files recursively
       run: ls -R autocoder-artifact
