@@ -1,7 +1,7 @@
 name: Access Issue Information
 on: 
   issues:  # trigger 
-    types: [opened, reopened. labeled]
+    types: [opened, reopened, labeled]
     
 # Define the event 
 jobs:
