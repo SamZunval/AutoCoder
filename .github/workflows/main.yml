@@ -14,6 +14,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Make script executable
+      run: chmod +x scripts/autocoder.sh
+      
     - name: Run AutoCoder script
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -21,7 +24,6 @@ jobs:
         ISSUE_NUMBER: ${{ github.event.issue.number }}
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
-        chmod +x scripts/autocoder.sh
         ./scripts/autocoder.sh "$GITHUB_TOKEN" "$REPOSITORY" "$ISSUE_NUMBER" "$OPENAI_API_KEY"
 
     - name: Upload Artifact
