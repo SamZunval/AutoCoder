@@ -47,7 +47,7 @@ jobs:
       with:
         branch: autocoder-branch-${{ env.ISSUE_NUMBER }}
         base: main
-        title: "AutoCoder: generated code for issue #${{ env.,ISSUE_NUMBER }}"      
+        title: "AutoCoder: generated code for issue #${{ env.ISSUE_NUMBER }}"      
         labels: autocoder-bot
   
     - name: Upload Artifact
