@@ -45,7 +45,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
-        branch: autocoder-branch-${{ github.event.issue.number }}
+        branch: autocoder-branch-issueNumber
         base: main
         labels: autocoder-bot
   
