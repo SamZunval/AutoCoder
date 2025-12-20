@@ -48,14 +48,14 @@ runs:
           "${{ inputs.OPENAI_API_KEY }}"
       shell: bash
 
-    - name: Configure user
+    - name: Configure credentials 
       run: |
           git config user.name "autocoder-bot"
           git config user.email "actions@github.com"
       shell: bash
         
       # Commit generated files
-    - name: Commit generated code
+    - name: Commit files
       run: |
         git add .
         git diff --cached --quiet || git commit -m "Auto-generated code for issue #${{ inputs.ISSUE_NUMBER }}"
