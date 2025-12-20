@@ -1,72 +1,65 @@
 name: 'AutoCoder'
-description: 'This action automates the process of generating code from GitHub issues using OpenAIs ChatGPT and subsequently creates a pull request with the generated code for review.'
+description: 'This action automates the process of generating code from GitHub issues using OpenAI ChatGPT and creates a pull request with the generated code.'
 author: 'Samuel Zuniga'
 
 inputs:
-  GITHUB_TOKEN :
-    description: 'Personal access token (PAT) used for GitHub API authentication. This token is required to create pull requests and handle other repository interactions.'
+  GITHUB_TOKEN:
+    description: 'Personal access token (PAT) used for GitHub API authentication.'
     required: true
   REPOSITORY:
-    description: 'The repository where the action will be executed '
+    description: 'The repository where the action will be executed.'
     required: true
   ISSUE_NUMBER:
-    description: 'The number of the issue that triggered the action'
+    description: 'The number of the issue that triggered the action.'
     required: true
   OPENAI_API_KEY:
-    description: 'API key for OpenAI, enabling interactions with the ChatGPT service to generate code based on issue descriptions.'
+    description: 'API key for OpenAI, enabling interactions with the ChatGPT service to generate code.'
     required: true
   SCRIPT_PATH:
-    description: "Path to the script that sends prompts to ChatGPT"
+    description: "Path to the script that sends prompts to ChatGPT."
     required: true
     default: "scripts/script.sh"
   LABEL:
-    description: 'The label assigned to GitHub issues that should be processed by the AutoCoder action. Only issues with this label will trigger the code generation process.'
+    description: 'The label assigned to GitHub issues that triggers this action.'
     required: true
     default: 'autocoder-bot'
 
 outputs:
   pull_request_url:
-    description: 'The URL of the pull request that has been automatically created, containing the auto-generated code for review and potential merging.'
-    
+    description: 'The URL of the pull request containing the auto-generated code.'
+
 runs:
   using: 'composite'
   steps:
 
     - name: Checkout repository
       uses: actions/checkout@v4
-  
+
     - name: Make script executable
       run: chmod +x ${{ inputs.SCRIPT_PATH }}
-      shell: bash
-      
-    - name: Interact with ChatGPT 
-      run: |
-        ${{ inputs.SCRIPT_PATH }} \
-          "${{ inputs.GITHUB_TOKEN  }}" \
-          "${{ inputs.REPOSITORY }}" \
-          "${{ inputs.ISSUE_NUMBER }}" \
-          "${{ inputs.OPENAI_API_KEY }}"
-      shell: bash
 
     - name: Configure Git credentials
       run: |
         git config --global user.name "autocoder-bot"
         git config --global user.email "actions@github.com"
-      shell: bash
-      
-      # Commit generated files
-    - name: Commit files
+
+    - name: Run AutoCoder script
+      run: |
+        ${{ inputs.SCRIPT_PATH }} \
+          "${{ inputs.GITHUB_TOKEN }}" \
+          "${{ inputs.REPOSITORY }}" \
+          "${{ inputs.ISSUE_NUMBER }}" \
+          "${{ inputs.OPENAI_API_KEY }}"
+
+    - name: Commit generated files
       run: |
         git add .
         git diff --cached --quiet || git commit -m "Auto-generated code for issue #${{ inputs.ISSUE_NUMBER }}"
-      shell: bash
-            
-    # Create pull request
+
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
         branch: autocoder-branch-${{ inputs.ISSUE_NUMBER }}
         base: main
-        title: "AutoCoder: generated code for issue #${{ inputs.ISSUE_NUMBER  }}"      
+        title: "AutoCoder: generated code for issue #${{ inputs.ISSUE_NUMBER }}"
         labels: ${{ inputs.LABEL }}
-        
