@@ -40,7 +40,7 @@ jobs:
     # Commit generated files
     - name: Commit generated code
       run: |
-        git checkout -b autocoder-branch-${{ github.event.issue.number }}
+        git checkout -b  autocoder-branch-issueNumber${{ github.event.issue.number }}
         git add .
         git commit -m "Auto-generated code for issue #${{ github.event.issue.number }}"
 
