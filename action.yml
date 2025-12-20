@@ -39,7 +39,7 @@ runs:
       run: chmod +x ${{ inputs.script_path }}
       shell: bash
       
-     - name: Interact with ChatGPT 
+    - name: Interact with ChatGPT 
       run: |
         ${{ inputs.SCRIPT_PATH }} \
           "${{ inputs.GITHUB_TOKEN }}" \
