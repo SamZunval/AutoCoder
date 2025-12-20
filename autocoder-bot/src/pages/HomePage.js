@@ -1,0 +1,1 @@
+import React from 'react'; import { formatDate } from '../utils/helpers'; const HomePage = () => {  const currentDate = new Date();  const formattedDate = formatDate(currentDate);  return <div>Welcome to our website! Today's date is {formattedDate}</div>; }; export default HomePage;
