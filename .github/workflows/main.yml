@@ -4,8 +4,7 @@ name: Access Issue Information
 permissions:
   contents: write
   pull-requests: write
-
-
+  
 on: 
   issues:  # trigger 
     types: [opened, reopened, labeled]
@@ -49,7 +48,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
-        branch: autocoder-branch-${{ github.event.issue.number }}
+        branch: autocoder-branch-issueNumber${{ github.event.issue.number }}
         base: main
         labels: autocoder-bot
   
