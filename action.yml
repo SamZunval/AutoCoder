@@ -52,14 +52,14 @@ runs:
       run: |
           git config user.name "autocoder-bot"
           git config user.email "actions@github.com"
-        shell: bash
+      shell: bash
         
       # Commit generated files
     - name: Commit generated code
       run: |
         git add .
         git diff --cached --quiet || git commit -m "Auto-generated code for issue #${{ inputs.ISSUE_NUMBER }}"
-        shell: bash
+      shell: bash
             
     # Create pull request
     - name: Create Pull Request
