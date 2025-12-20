@@ -32,18 +32,15 @@ jobs:
       run: |
         ./scripts/script.sh "$GITHUB_TOKEN" "$REPOSITORY" "$ISSUE_NUMBER" "$OPENAI_API_KEY"
 
-    - name: Configure git user
-      run: |
-        git config user.name "autocoder-bot"
-        git config user.email "actions@github.com"
 
     # Commit generated files
     - name: Commit generated code
       run: |
-        git checkout -b  autocoder-branch-issueNumber${{ github.event.issue.number }}
+        git config user.name "autocoder-bot"
+        git config user.email "actions@github.com"
         git add .
-        git commit -m "Auto-generated code for issue #${{ github.event.issue.number }}"
-
+        git diff --cached --quiet || git commit -m "Auto-generated code for issue #${{ github.event.issue.number }}"
+        
     # Create pull request
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
