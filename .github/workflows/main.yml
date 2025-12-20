@@ -1,4 +1,11 @@
 name: Access Issue Information
+
+#Adding permissions. Provide write access to contents and pull-requests
+permissions:
+  contents: write
+  pull-requests: write
+
+
 on: 
   issues:  # trigger 
     types: [opened, reopened, labeled]
